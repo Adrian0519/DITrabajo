@@ -4,17 +4,22 @@
  */
 package adrianrodriguezroqueiro;
 
+import Controlador.Controlador;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author a18adrianrr
  */
 public class gestionProvincias extends javax.swing.JFrame {
-
+private Controlador Controlador;
     /**
      * Creates new form gestionProvincias
      */
-    public gestionProvincias() {
+    public gestionProvincias(Controlador controlador) {
         initComponents();
+        this.Controlador=controlador;
+        actualizarComboProvincias();
     }
 
     /**
@@ -95,11 +100,24 @@ public class gestionProvincias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonDeleteProviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteProviActionPerformed
-        // TODO add your handling code here:
+       String provincia=(String)jComboBoxProvi.getSelectedItem();
+       if(provincia!=null){
+          Controlador.eliminarProvincia(provincia);
+          actualizarComboProvincias();
+       }else{
+           JOptionPane.showMessageDialog(this, "selecciona una provincia para eliminar");
+       }
     }//GEN-LAST:event_jButtonDeleteProviActionPerformed
 
     private void jButtonaddProviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonaddProviActionPerformed
-        // TODO add your handling code here:
+        String provincia=(String)jTextFieldProvincia.getText().trim();
+        if (provincia.isEmpty()) {
+            Controlador.añadirProvincia(provincia);
+            actualizarComboProvincias();
+        }else{
+            JOptionPane.showMessageDialog(this,"ingrese una provincia valida");
+        }
+        limpiarCampos();
     }//GEN-LAST:event_jButtonaddProviActionPerformed
 
     /**
@@ -132,7 +150,8 @@ public class gestionProvincias extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new gestionProvincias().setVisible(true);
+                   Controlador controlador=new Controlador(false);
+                   new gestionProvincias(controlador).setVisible(true);
             }
         });
     }
@@ -145,4 +164,15 @@ public class gestionProvincias extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextFieldProvincia;
     // End of variables declaration//GEN-END:variables
+
+    private void actualizarComboProvincias() {
+       jComboBoxProvi.removeAllItems();
+        for (String provincia : Controlador.getProvincias()) {
+            jComboBoxProvi.addItem(provincia);
+        }
+    }
+    
+    private void limpiarCampos(){
+        jTextFieldProvincia.setText("");
+    }
 }

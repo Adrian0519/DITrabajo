@@ -5,11 +5,14 @@
 package Controlador;
 
 import Modelo.ModeloDatos;
+import Modelo.Trabajador;
 import adrianrodriguezroqueiro.AltaTrabajador;
 import adrianrodriguezroqueiro.Dialogos;
 import adrianrodriguezroqueiro.TrabajadoresDisponibles;
 import adrianrodriguezroqueiro.gestionProfesion;
 import adrianrodriguezroqueiro.gestionProvincias;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,6 +54,53 @@ public class Controlador {
          AltaTrabajador altatrabajador=new AltaTrabajador();
          altatrabajador.setVisible(true);
      }
+    public List<String> getProfesion(){
+      return modeloDatos.getListaProfesion();
+    }
     
+    public List<String>getProvincias(){
+        return modeloDatos.getListaPro();
+    }
     
+    public void añadirProvincia(String provincia){
+        if (modeloDatos.añadirProvincias(provincia)) {
+            JOptionPane.showConfirmDialog(null, "se agrego correctamente");
+        }
+        else{
+            JOptionPane.showConfirmDialog(null, "Provincia ya existe");
+        }
+    }
+    
+    public void añadirProfesion(String profesion){
+        if (modeloDatos.añadirProfesion(profesion)) {
+            JOptionPane.showMessageDialog(null, "Se añadio la profesion de forma exitosa");
+        }else{
+            JOptionPane.showMessageDialog(null, "Profesion ya existe");
+        }
+    }
+    
+    public void añadirTrabajador(String dni,String nombre, String apellido1, String apellido2,String provincia, String profesion){
+        Trabajador trabajador=new Trabajador(dni, nombre, apellido1, apellido2, provincia, profesion);
+        if (modeloDatos.añadirTrabajador(trabajador)) {
+            JOptionPane.showMessageDialog(null, "Se agrego al empleado");
+        }else{
+            JOptionPane.showMessageDialog(null, "El empleado no se puede agregar");
+        }
+    }
+    
+    public void eliminarProfesion(String profesion){
+        if (modeloDatos.eliminarProfesion(profesion)) {
+            JOptionPane.showMessageDialog(null, "La profesion fue eliminada");
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar la profesion");
+        }
+    }
+    
+    public void eliminarProvincia(String provincia){
+        if (modeloDatos.eliminarProvincia(provincia)) {
+            JOptionPane.showMessageDialog(null, "Se elimino la provincia");
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar la provincia");
+        }
+    }
 }

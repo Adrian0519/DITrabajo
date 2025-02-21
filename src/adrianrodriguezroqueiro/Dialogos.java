@@ -16,7 +16,7 @@ public class Dialogos extends javax.swing.JFrame {
     /**
      * Creates new form Dialogos
      */
-    public Dialogos(Controlador aThis) {
+    public Dialogos(Controlador controlador) {
         initComponents();
         this.controlador=controlador;
     }
