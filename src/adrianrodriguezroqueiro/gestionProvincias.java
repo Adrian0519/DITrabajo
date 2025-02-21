@@ -12,13 +12,13 @@ import javax.swing.JOptionPane;
  * @author a18adrianrr
  */
 public class gestionProvincias extends javax.swing.JFrame {
-private Controlador Controlador;
+private Controlador controlador;
     /**
      * Creates new form gestionProvincias
      */
     public gestionProvincias(Controlador controlador) {
         initComponents();
-        this.Controlador=controlador;
+        this.controlador=controlador;
         actualizarComboProvincias();
     }
 
@@ -101,8 +101,8 @@ private Controlador Controlador;
 
     private void jButtonDeleteProviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteProviActionPerformed
        String provincia=(String)jComboBoxProvi.getSelectedItem();
-       if(provincia!=null){
-          Controlador.eliminarProvincia(provincia);
+       if(!provincia.isEmpty()){
+          controlador.eliminarProvincia(provincia);
           actualizarComboProvincias();
        }else{
            JOptionPane.showMessageDialog(this, "selecciona una provincia para eliminar");
@@ -111,8 +111,8 @@ private Controlador Controlador;
 
     private void jButtonaddProviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonaddProviActionPerformed
         String provincia=(String)jTextFieldProvincia.getText().trim();
-        if (provincia.isEmpty()) {
-            Controlador.añadirProvincia(provincia);
+        if (!provincia.isEmpty()) {
+            controlador.añadirProvincia(provincia);
             actualizarComboProvincias();
         }else{
             JOptionPane.showMessageDialog(this,"ingrese una provincia valida");
@@ -167,7 +167,7 @@ private Controlador Controlador;
 
     private void actualizarComboProvincias() {
        jComboBoxProvi.removeAllItems();
-        for (String provincia : Controlador.getProvincias()) {
+        for (String provincia : controlador.getProvincias()) {
             jComboBoxProvi.addItem(provincia);
         }
     }

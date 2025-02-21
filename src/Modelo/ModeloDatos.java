@@ -46,7 +46,7 @@ public class ModeloDatos {
     }
     
     public boolean añadirProvincias(String provincias){
-        if (!provincias.contains(provincias)) {
+        if (!listaPro.contains(provincias)) {
           listaPro.add(provincias);
           return true;
         }
@@ -54,7 +54,7 @@ public class ModeloDatos {
     }
     
     public boolean añadirProfesion(String profesion){
-        if (!profesion.contains(profesion)) {
+        if (!listaProfesion.contains(profesion)) {
           listaProfesion.add(profesion);
           return true;
         }

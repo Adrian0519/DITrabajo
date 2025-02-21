@@ -36,7 +36,7 @@ public class Controlador {
     }
     
     public void abrirVentanaGestionProvincia(){
-        gestionProvincias gestionprovincias=new gestionProvincias();
+        gestionProvincias gestionprovincias=new gestionProvincias(this);
         gestionprovincias.setVisible(true);
     }
     
@@ -64,10 +64,10 @@ public class Controlador {
     
     public void añadirProvincia(String provincia){
         if (modeloDatos.añadirProvincias(provincia)) {
-            JOptionPane.showConfirmDialog(null, "se agrego correctamente");
+            JOptionPane.showMessageDialog(null, "se agrego correctamente");
         }
         else{
-            JOptionPane.showConfirmDialog(null, "Provincia ya existe");
+            JOptionPane.showMessageDialog(null, "Provincia ya existe");
         }
     }
     
