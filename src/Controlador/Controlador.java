@@ -41,7 +41,7 @@ public class Controlador {
     }
     
     public void abrirVentanaGestionProfesion(){
-        gestionProfesion gestionprofesion=new gestionProfesion();
+        gestionProfesion gestionprofesion=new gestionProfesion(this);
         gestionprofesion.setVisible(true);
     }
     
@@ -51,7 +51,7 @@ public class Controlador {
     }
      
      public void abrirAltaTrabajador(){
-         AltaTrabajador altatrabajador=new AltaTrabajador();
+         AltaTrabajador altatrabajador=new AltaTrabajador(this);
          altatrabajador.setVisible(true);
      }
     public List<String> getProfesion(){

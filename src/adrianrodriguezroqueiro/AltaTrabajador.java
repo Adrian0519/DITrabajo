@@ -4,17 +4,23 @@
  */
 package adrianrodriguezroqueiro;
 
+import Controlador.Controlador;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author a18adrianrr
  */
 public class AltaTrabajador extends javax.swing.JFrame {
-
+private Controlador controlador;
     /**
      * Creates new form AltaTrabajador
      */
-    public AltaTrabajador() {
+    public AltaTrabajador(Controlador controlador) {
         initComponents();
+        this.controlador=controlador;
+        actualizarComboProvincias();
+        actualizarTextoProfesiones();
     }
 
     /**
@@ -56,8 +62,11 @@ public class AltaTrabajador extends javax.swing.JFrame {
         jLabel6.setText("Profesion");
 
         jButtonAlta.setText("Alta");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lugo", "Coruña", "Pontevedra", "Ourense" }));
+        jButtonAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAltaActionPerformed(evt);
+            }
+        });
 
         jTextAreaProfesion.setColumns(20);
         jTextAreaProfesion.setRows(5);
@@ -134,6 +143,22 @@ public class AltaTrabajador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
+        String dni=jTextFieldDNI.getText();
+        String nombre=jTextFieldName.getText();
+        String ape1=jTextFieldApellido1.getText();
+        String ape2=jTextFieldApellido2.getText();
+        String provincia=(String)jComboBox1.getSelectedItem();
+        String profesion=jTextAreaProfesion.getSelectedText();
+        if(dni.isEmpty()||nombre.isEmpty()||ape1.isEmpty()||ape2.isEmpty()||provincia.isEmpty()||profesion==null||profesion.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Pon todos los campos","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            controlador.añadirTrabajador(dni, nombre, ape1, ape2, provincia, profesion);
+            JOptionPane.showMessageDialog(this, "Agregado exitoso","Exito",JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_jButtonAltaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -164,11 +189,25 @@ public class AltaTrabajador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AltaTrabajador().setVisible(true);
+                Controlador controlador=new Controlador();
+                new AltaTrabajador(controlador).setVisible(true);
             }
         });
     }
+      private void actualizarTextoProfesiones(){
+       StringBuilder profesiones=new StringBuilder();
+        for (String profesion: controlador.getProfesion()) {
+            profesiones.append(profesion).append("\n");
+        }
+        jTextAreaProfesion.setText(profesiones.toString());
+    }
 
+ private void actualizarComboProvincias() {
+       jComboBox1.removeAllItems();
+        for (String provincia : controlador.getProvincias()) {
+            jComboBox1.addItem(provincia);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlta;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -185,4 +224,12 @@ public class AltaTrabajador extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldDNI;
     private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiarCampos() {
+        jTextFieldDNI.setText("");
+        jTextFieldName.setText("");
+        jTextFieldApellido1.setText("");
+        jTextFieldApellido2.setText("");
+        jComboBox1.setSelectedIndex(0);
+    }
 }
