@@ -4,17 +4,24 @@
  */
 package adrianrodriguezroqueiro;
 
+import Controlador.Controlador;
+import Modelo.Trabajador;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author a18adrianrr
  */
 public class TrabajadoresDisponibles extends javax.swing.JFrame {
-
+private Controlador controlador;
     /**
      * Creates new form TrabajadoresDisponibles
      */
-    public TrabajadoresDisponibles() {
+    public TrabajadoresDisponibles(Controlador controlador) {
         initComponents();
+        this.controlador=controlador;
+        cargarTrabajadores();
     }
 
     /**
@@ -94,7 +101,8 @@ public class TrabajadoresDisponibles extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrabajadoresDisponibles().setVisible(true);
+                Controlador controlador=new Controlador(false);
+                new TrabajadoresDisponibles(controlador).setVisible(true);
             }
         });
     }
@@ -103,4 +111,15 @@ public class TrabajadoresDisponibles extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableTrabajadores;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTrabajadores() {
+        DefaultTableModel model=(DefaultTableModel)jTableTrabajadores.getModel();
+        model.setRowCount(0);
+        List<Trabajador>trabajadores=controlador.getTrabajadores();
+        for(Trabajador nombre : trabajadores){
+            Object[]road={nombre.getNombre()+" "+nombre.getApellido1()+" "+nombre.getApellido2(), nombre.getProvincia(), nombre.getProfesion()};
+            model.addRow(road);
+            dispose();
+        }
+    }
 }

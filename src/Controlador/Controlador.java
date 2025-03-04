@@ -46,7 +46,7 @@ public class Controlador {
     }
     
      public void abrirtrabajadoresDisponibles(){
-         TrabajadoresDisponibles trabajadoresDisponibles=new TrabajadoresDisponibles();
+         TrabajadoresDisponibles trabajadoresDisponibles=new TrabajadoresDisponibles(this);
         trabajadoresDisponibles.setVisible(true);
     }
      
@@ -61,7 +61,9 @@ public class Controlador {
     public List<String>getProvincias(){
         return modeloDatos.getListaPro();
     }
-    
+    public List<Trabajador> getTrabajadores(){
+        return modeloDatos.getListaTrabajadors();
+    }
     public void añadirProvincia(String provincia){
         if (modeloDatos.añadirProvincias(provincia)) {
             JOptionPane.showMessageDialog(null, "se agrego correctamente");
