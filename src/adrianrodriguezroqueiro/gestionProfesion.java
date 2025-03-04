@@ -4,17 +4,23 @@
  */
 package adrianrodriguezroqueiro;
 
+import Controlador.Controlador;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author a18adrianrr
  */
 public class gestionProfesion extends javax.swing.JFrame {
-
+private Controlador controlador;
     /**
      * Creates new form gestionProfesion
      */
-    public gestionProfesion() {
+    public gestionProfesion(Controlador controlador) {
         initComponents();
+        this.controlador=controlador;
+        actualizarTextoProfesion();
     }
 
     /**
@@ -42,12 +48,21 @@ public class gestionProfesion extends javax.swing.JFrame {
 
         jTextAreaProfe.setColumns(20);
         jTextAreaProfe.setRows(5);
-        jTextAreaProfe.setText("Madero\nLadron\nRatero");
         jScrollPane1.setViewportView(jTextAreaProfe);
 
         jButtonEliminarProfe.setText("Eliminar");
+        jButtonEliminarProfe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarProfeActionPerformed(evt);
+            }
+        });
 
         jButtonaddProfe.setText("Añadir Profesion");
+        jButtonaddProfe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonaddProfeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,6 +107,28 @@ public class gestionProfesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonEliminarProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarProfeActionPerformed
+        String profesion=jTextAreaProfe.getSelectedText();
+        if(profesion!=null){
+            controlador.eliminarProfesion(profesion);
+            actualizarTextoProfesion();
+        }else{
+            JOptionPane.showMessageDialog(this, "Sellecciona para poder eliminar");
+        }
+    }//GEN-LAST:event_jButtonEliminarProfeActionPerformed
+
+    private void jButtonaddProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonaddProfeActionPerformed
+        String profesionNueva=jTextFieldNuevaProfe.getText();
+        if(!profesionNueva.isEmpty()){
+            controlador.añadirProfesion(profesionNueva);
+            actualizarTextoProfesion();
+        }else{
+            JOptionPane.showMessageDialog(this, "Necesita ingresar una profesion y que sea valida");
+        }
+        limpiarCampos();
+            
+    }//GEN-LAST:event_jButtonaddProfeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -122,7 +159,8 @@ public class gestionProfesion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new gestionProfesion().setVisible(true);
+                Controlador controlador=new Controlador(false);
+                new gestionProfesion(controlador).setVisible(true);
             }
         });
     }
@@ -136,4 +174,16 @@ public class gestionProfesion extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaProfe;
     private javax.swing.JTextField jTextFieldNuevaProfe;
     // End of variables declaration//GEN-END:variables
+
+    private void actualizarTextoProfesion() {
+       StringBuilder profesiones=new StringBuilder();
+        for (String profesion: controlador.getProfesion()) {
+            profesiones.append(profesion).append("\n");
+        }
+        jTextAreaProfe.setText(profesiones.toString());
+    }
+
+    private void limpiarCampos() {
+       jTextFieldNuevaProfe.setText("");
+    }
 }
